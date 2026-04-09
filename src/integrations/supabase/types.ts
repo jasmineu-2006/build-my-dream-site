@@ -14,7 +14,119 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      books: {
+        Row: {
+          author: string
+          available_copies: number
+          category: string
+          cover_color: string
+          created_at: string
+          id: string
+          isbn: string
+          location: string
+          title: string
+          total_copies: number
+          updated_at: string
+        }
+        Insert: {
+          author: string
+          available_copies?: number
+          category?: string
+          cover_color?: string
+          created_at?: string
+          id?: string
+          isbn: string
+          location?: string
+          title: string
+          total_copies?: number
+          updated_at?: string
+        }
+        Update: {
+          author?: string
+          available_copies?: number
+          category?: string
+          cover_color?: string
+          created_at?: string
+          id?: string
+          isbn?: string
+          location?: string
+          title?: string
+          total_copies?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      issued_books: {
+        Row: {
+          book_id: string
+          created_at: string
+          due_date: string
+          fine: number
+          id: string
+          issue_date: string
+          return_date: string | null
+          user_id: string
+        }
+        Insert: {
+          book_id: string
+          created_at?: string
+          due_date?: string
+          fine?: number
+          id?: string
+          issue_date?: string
+          return_date?: string | null
+          user_id: string
+        }
+        Update: {
+          book_id?: string
+          created_at?: string
+          due_date?: string
+          fine?: number
+          id?: string
+          issue_date?: string
+          return_date?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "issued_books_book_id_fkey"
+            columns: ["book_id"]
+            isOneToOne: false
+            referencedRelation: "books"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          name: string
+          role: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          role?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          role?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
