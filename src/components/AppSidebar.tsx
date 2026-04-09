@@ -1,4 +1,5 @@
 import { useLibrary } from "@/context/LibraryContext";
+import { supabase } from "@/integrations/supabase/client";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
   BookOpen, LayoutDashboard, Library, Users, BookMarked,
@@ -23,8 +24,8 @@ const AppSidebar = () => {
     { to: "/users", icon: Users, label: "Users", roles: ["admin"] },
   ];
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     navigate("/");
   };
 
