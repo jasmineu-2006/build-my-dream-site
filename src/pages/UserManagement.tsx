@@ -1,5 +1,5 @@
 import { useLibrary } from "@/context/LibraryContext";
-import { Users, ShieldCheck, Library, GraduationCap } from "lucide-react";
+import { ShieldCheck, Library, GraduationCap } from "lucide-react";
 
 const roleIcons = {
   student: GraduationCap,

@@ -8,19 +8,19 @@ const Dashboard = () => {
   const { currentUser, books, issuedBooks, users } = useLibrary();
   const navigate = useNavigate();
 
-  const totalBooks = books.reduce((s, b) => s + b.totalCopies, 0);
-  const availableBooks = books.reduce((s, b) => s + b.availableCopies, 0);
-  const activeIssues = issuedBooks.filter((i) => !i.returnDate);
-  const overdueBooks = activeIssues.filter((i) => new Date(i.dueDate) < new Date());
+  const totalBooks = books.reduce((s, b) => s + b.total_copies, 0);
+  const availableBooks = books.reduce((s, b) => s + b.available_copies, 0);
+  const activeIssues = issuedBooks.filter((i) => !i.return_date);
+  const overdueBooks = activeIssues.filter((i) => new Date(i.due_date) < new Date());
   const totalFines = issuedBooks.reduce((s, i) => s + i.fine, 0);
 
-  const myIssued = activeIssues.filter((i) => i.userId === currentUser?.id);
+  const myIssued = activeIssues.filter((i) => i.user_id === currentUser?.user_id);
 
   return (
     <div className="p-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-foreground text-heading">
-          Welcome, {currentUser?.name}
+          Welcome, {currentUser?.name || "User"}
         </h1>
         <p className="text-muted-foreground mt-1 text-body">
           Here's an overview of the library system
@@ -38,7 +38,6 @@ const Dashboard = () => {
         )}
       </div>
 
-      {/* Recent / overdue section */}
       {currentUser?.role !== "student" && overdueBooks.length > 0 && (
         <div className="mb-8">
           <h2 className="text-xl font-bold text-foreground mb-4 text-heading">Overdue Books</h2>
@@ -54,17 +53,17 @@ const Dashboard = () => {
               </thead>
               <tbody>
                 {overdueBooks.map((issue) => {
-                  const book = books.find((b) => b.id === issue.bookId);
-                  const user = users.find((u) => u.id === issue.userId);
+                  const book = books.find((b) => b.id === issue.book_id);
+                  const user = users.find((u) => u.user_id === issue.user_id);
                   const daysOverdue = Math.floor(
-                    (new Date().getTime() - new Date(issue.dueDate).getTime()) / (1000 * 60 * 60 * 24)
+                    (new Date().getTime() - new Date(issue.due_date).getTime()) / (1000 * 60 * 60 * 24)
                   );
                   return (
                     <tr key={issue.id} className="border-b border-border last:border-0">
                       <td className="p-3 text-foreground text-body">{book?.title}</td>
                       <td className="p-3 text-muted-foreground text-body">{user?.name}</td>
                       <td className="p-3 text-body">
-                        <span className="text-destructive font-medium">{issue.dueDate}</span>
+                        <span className="text-destructive font-medium">{issue.due_date}</span>
                         <span className="text-xs text-muted-foreground ml-2">({daysOverdue}d overdue)</span>
                       </td>
                       <td className="p-3 font-medium text-destructive text-body">₹{daysOverdue}</td>

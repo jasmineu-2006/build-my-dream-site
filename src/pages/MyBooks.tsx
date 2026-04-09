@@ -4,9 +4,9 @@ import { BookMarked, AlertTriangle, CheckCircle2 } from "lucide-react";
 const MyBooks = () => {
   const { currentUser, issuedBooks, books, returnBook, calculateFine } = useLibrary();
 
-  const myBooks = issuedBooks.filter((i) => i.userId === currentUser?.id);
-  const active = myBooks.filter((i) => !i.returnDate);
-  const returned = myBooks.filter((i) => i.returnDate);
+  const myBooks = issuedBooks.filter((i) => i.user_id === currentUser?.user_id);
+  const active = myBooks.filter((i) => !i.return_date);
+  const returned = myBooks.filter((i) => i.return_date);
 
   return (
     <div className="p-8">
@@ -28,8 +28,8 @@ const MyBooks = () => {
       ) : (
         <div className="space-y-3 mb-8">
           {active.map((issue) => {
-            const book = books.find((b) => b.id === issue.bookId);
-            const fine = calculateFine(issue.dueDate);
+            const book = books.find((b) => b.id === issue.book_id);
+            const fine = calculateFine(issue.due_date);
             const isOverdue = fine > 0;
             return (
               <div
@@ -40,7 +40,7 @@ const MyBooks = () => {
               >
                 <div
                   className="w-12 h-16 rounded-lg flex items-center justify-center shrink-0"
-                  style={{ backgroundColor: book?.coverColor }}
+                  style={{ backgroundColor: book?.cover_color }}
                 >
                   <span className="text-primary-foreground/50 text-xs font-bold text-body">
                     {book?.title.charAt(0)}
@@ -50,9 +50,9 @@ const MyBooks = () => {
                   <p className="font-semibold text-foreground text-body truncate">{book?.title}</p>
                   <p className="text-sm text-muted-foreground text-body">{book?.author}</p>
                   <div className="flex gap-4 mt-1 text-xs text-body">
-                    <span className="text-muted-foreground">Issued: {issue.issueDate}</span>
+                    <span className="text-muted-foreground">Issued: {issue.issue_date}</span>
                     <span className={isOverdue ? "text-destructive font-medium" : "text-muted-foreground"}>
-                      Due: {issue.dueDate}
+                      Due: {issue.due_date}
                     </span>
                   </div>
                 </div>
@@ -84,12 +84,12 @@ const MyBooks = () => {
           </h2>
           <div className="space-y-3">
             {returned.map((issue) => {
-              const book = books.find((b) => b.id === issue.bookId);
+              const book = books.find((b) => b.id === issue.book_id);
               return (
                 <div key={issue.id} className="bg-card rounded-xl border border-border p-4 flex items-center gap-4 opacity-70">
                   <div
                     className="w-12 h-16 rounded-lg flex items-center justify-center shrink-0"
-                    style={{ backgroundColor: book?.coverColor }}
+                    style={{ backgroundColor: book?.cover_color }}
                   >
                     <span className="text-primary-foreground/50 text-xs font-bold text-body">
                       {book?.title.charAt(0)}
@@ -98,7 +98,7 @@ const MyBooks = () => {
                   <div className="flex-1">
                     <p className="font-semibold text-foreground text-body">{book?.title}</p>
                     <p className="text-xs text-muted-foreground text-body">
-                      Returned on {issue.returnDate} {issue.fine > 0 && `• Fine: ₹${issue.fine}`}
+                      Returned on {issue.return_date} {issue.fine > 0 && `• Fine: ₹${issue.fine}`}
                     </p>
                   </div>
                 </div>

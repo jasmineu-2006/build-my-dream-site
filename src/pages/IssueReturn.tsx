@@ -7,9 +7,9 @@ const IssueReturn = () => {
   const [selectedBook, setSelectedBook] = useState("");
   const [selectedUser, setSelectedUser] = useState("");
 
-  const activeIssues = issuedBooks.filter((i) => !i.returnDate);
+  const activeIssues = issuedBooks.filter((i) => !i.return_date);
   const students = users.filter((u) => u.role === "student");
-  const availableBooks = books.filter((b) => b.availableCopies > 0);
+  const availableBooks = books.filter((b) => b.available_copies > 0);
 
   const handleIssue = () => {
     if (selectedBook && selectedUser) {
@@ -26,7 +26,6 @@ const IssueReturn = () => {
         <p className="text-muted-foreground mt-1 text-body">Manage book issues and returns</p>
       </div>
 
-      {/* Issue section */}
       <div className="bg-card rounded-xl border border-border p-6 mb-8">
         <h2 className="text-lg font-bold text-foreground mb-4 text-heading flex items-center gap-2">
           <ArrowLeftRight className="w-5 h-5 text-primary" />
@@ -43,7 +42,7 @@ const IssueReturn = () => {
               <option value="">Choose a book...</option>
               {availableBooks.map((b) => (
                 <option key={b.id} value={b.id}>
-                  {b.title} ({b.availableCopies} available)
+                  {b.title} ({b.available_copies} available)
                 </option>
               ))}
             </select>
@@ -57,7 +56,7 @@ const IssueReturn = () => {
             >
               <option value="">Choose a student...</option>
               {students.map((u) => (
-                <option key={u.id} value={u.id}>
+                <option key={u.user_id} value={u.user_id}>
                   {u.name} ({u.email})
                 </option>
               ))}
@@ -73,7 +72,6 @@ const IssueReturn = () => {
         </button>
       </div>
 
-      {/* Active issues table */}
       <h2 className="text-lg font-bold text-foreground mb-4 text-heading">Active Issues ({activeIssues.length})</h2>
       <div className="bg-card rounded-xl border border-border overflow-hidden">
         <table className="w-full text-sm">
@@ -89,16 +87,16 @@ const IssueReturn = () => {
           </thead>
           <tbody>
             {activeIssues.map((issue) => {
-              const book = books.find((b) => b.id === issue.bookId);
-              const user = users.find((u) => u.id === issue.userId);
-              const fine = calculateFine(issue.dueDate);
+              const book = books.find((b) => b.id === issue.book_id);
+              const user = users.find((u) => u.user_id === issue.user_id);
+              const fine = calculateFine(issue.due_date);
               return (
                 <tr key={issue.id} className="border-b border-border last:border-0">
                   <td className="p-3 text-foreground font-medium text-body">{book?.title}</td>
                   <td className="p-3 text-muted-foreground text-body">{user?.name}</td>
-                  <td className="p-3 text-muted-foreground text-body">{issue.issueDate}</td>
+                  <td className="p-3 text-muted-foreground text-body">{issue.issue_date}</td>
                   <td className={`p-3 text-body ${fine > 0 ? "text-destructive font-medium" : "text-muted-foreground"}`}>
-                    {issue.dueDate}
+                    {issue.due_date}
                   </td>
                   <td className={`p-3 text-body ${fine > 0 ? "text-destructive font-medium" : "text-muted-foreground"}`}>
                     {fine > 0 ? `₹${fine}` : "—"}
