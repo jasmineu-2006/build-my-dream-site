@@ -7,7 +7,7 @@ interface BookCardProps {
 }
 
 const BookCard = ({ book, onClick }: BookCardProps) => {
-  const isAvailable = book.availableCopies > 0;
+  const isAvailable = book.available_copies > 0;
 
   return (
     <div
@@ -16,7 +16,7 @@ const BookCard = ({ book, onClick }: BookCardProps) => {
     >
       <div
         className="h-40 flex items-center justify-center relative"
-        style={{ backgroundColor: book.coverColor }}
+        style={{ backgroundColor: book.cover_color }}
       >
         <BookOpen className="w-12 h-12 text-primary-foreground/40" />
         <div className="absolute top-3 right-3">
@@ -27,7 +27,7 @@ const BookCard = ({ book, onClick }: BookCardProps) => {
                 : "bg-destructive/20 text-destructive"
             }`}
           >
-            {isAvailable ? `${book.availableCopies} available` : "Unavailable"}
+            {isAvailable ? `${book.available_copies} available` : "Unavailable"}
           </span>
         </div>
       </div>

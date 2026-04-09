@@ -20,7 +20,7 @@ const Books = () => {
 
   const handleIssue = (bookId: string) => {
     if (currentUser) {
-      issueBook(bookId, currentUser.id);
+      issueBook(bookId, currentUser.user_id);
       setSelectedBook(null);
     }
   };
@@ -73,7 +73,7 @@ const Books = () => {
             <div className="space-y-4">
               <div
                 className="h-32 rounded-lg flex items-center justify-center"
-                style={{ backgroundColor: selectedBook.coverColor }}
+                style={{ backgroundColor: selectedBook.cover_color }}
               >
                 <span className="text-3xl font-bold text-primary-foreground/30 text-heading">
                   {selectedBook.title.charAt(0)}
@@ -98,16 +98,16 @@ const Books = () => {
                 </div>
                 <div>
                   <p className="text-muted-foreground text-body">Total Copies</p>
-                  <p className="font-medium text-foreground text-body">{selectedBook.totalCopies}</p>
+                  <p className="font-medium text-foreground text-body">{selectedBook.total_copies}</p>
                 </div>
                 <div>
                   <p className="text-muted-foreground text-body">Available</p>
-                  <p className={`font-medium text-body ${selectedBook.availableCopies > 0 ? "text-success" : "text-destructive"}`}>
-                    {selectedBook.availableCopies}
+                  <p className={`font-medium text-body ${selectedBook.available_copies > 0 ? "text-success" : "text-destructive"}`}>
+                    {selectedBook.available_copies}
                   </p>
                 </div>
               </div>
-              {currentUser?.role === "student" && selectedBook.availableCopies > 0 && (
+              {currentUser?.role === "student" && selectedBook.available_copies > 0 && (
                 <button
                   onClick={() => handleIssue(selectedBook.id)}
                   className="w-full bg-primary text-primary-foreground py-2.5 rounded-lg font-medium hover:opacity-90 transition-opacity text-body"

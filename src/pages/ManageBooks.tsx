@@ -7,8 +7,8 @@ import {
 import { Book } from "@/lib/types";
 
 const emptyForm = {
-  title: "", author: "", isbn: "", category: "", totalCopies: 1,
-  availableCopies: 1, location: "", coverColor: "#1e3a5f",
+  title: "", author: "", isbn: "", category: "", total_copies: 1,
+  available_copies: 1, location: "", cover_color: "#1e3a5f",
 };
 
 const ManageBooks = () => {
@@ -27,9 +27,9 @@ const ManageBooks = () => {
     setEditingId(book.id);
     setForm({
       title: book.title, author: book.author, isbn: book.isbn,
-      category: book.category, totalCopies: book.totalCopies,
-      availableCopies: book.availableCopies, location: book.location,
-      coverColor: book.coverColor,
+      category: book.category, total_copies: book.total_copies,
+      available_copies: book.available_copies, location: book.location,
+      cover_color: book.cover_color,
     });
     setOpen(true);
   };
@@ -81,7 +81,7 @@ const ManageBooks = () => {
                   </span>
                 </td>
                 <td className="p-3 text-muted-foreground text-body">
-                  {book.availableCopies}/{book.totalCopies}
+                  {book.available_copies}/{book.total_copies}
                 </td>
                 <td className="p-3">
                   <div className="flex gap-2">
@@ -126,8 +126,8 @@ const ManageBooks = () => {
                 <label className="text-sm text-muted-foreground text-body">Total Copies</label>
                 <input
                   type="number" min={1}
-                  value={form.totalCopies}
-                  onChange={(e) => setForm((f) => ({ ...f, totalCopies: +e.target.value }))}
+                  value={form.total_copies}
+                  onChange={(e) => setForm((f) => ({ ...f, total_copies: +e.target.value }))}
                   className="w-full mt-1 px-3 py-2 rounded-lg border border-input bg-background text-foreground text-sm text-body"
                 />
               </div>
@@ -135,8 +135,8 @@ const ManageBooks = () => {
                 <label className="text-sm text-muted-foreground text-body">Available</label>
                 <input
                   type="number" min={0}
-                  value={form.availableCopies}
-                  onChange={(e) => setForm((f) => ({ ...f, availableCopies: +e.target.value }))}
+                  value={form.available_copies}
+                  onChange={(e) => setForm((f) => ({ ...f, available_copies: +e.target.value }))}
                   className="w-full mt-1 px-3 py-2 rounded-lg border border-input bg-background text-foreground text-sm text-body"
                 />
               </div>
